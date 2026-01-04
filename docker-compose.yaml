@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  bot:
+    image: python:3.12-slim
+    container_name: hlnn_downloader_bot
+    restart: unless-stopped
+    working_dir: /app
+    env_file:
+      - .env
+    command: >
+      sh -c "
+        apt-get update && 
+        apt-get install -y --no-install-recommends ffmpeg git ca-certificates && 
+        rm -rf /var/lib/apt/lists/* && 
+        pip install --no-cache-dir -r requirements.txt && 
+        python bot.py
+      "
+    volumes:
+      - .:/app
+      - ./audios:/app/audios
+      - ./videos:/app/videos

@@ -26,4 +26,4 @@ urllib3==2.6.2
 vkpymusic==3.5.1
 yandex-music==2.2.0
 yarl==1.22.0
-yt-dlp==2025.12.8
+yt-dlp==2026.8.19

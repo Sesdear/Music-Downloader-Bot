@@ -5,12 +5,9 @@ from messages_config import *
 from config import *
 
 import os
-
 async def yt_download_send_mp3(message: Message, url: str):
 
-    
     ydl_opts = {
-
         'format': 'bestaudio/best',
         'outtmpl': './audios/%(title)s.%(ext)s',
         'noplaylist': True,
@@ -18,14 +15,18 @@ async def yt_download_send_mp3(message: Message, url: str):
         'quiet': True,
         'writethumbnail': True,
         
+        'extractor_args': {
+            'youtube': {
+                'client': ['android', 'ios', 'tv', 'web_embedded']
+            }
+        },
+        
         'postprocessors': [
-
             {
                 'key': 'FFmpegExtractAudio',
                 'preferredcodec': 'mp3',
                 'preferredquality': '192',
             },
-
             {
                 'key': 'FFmpegMetadata',
                 'add_metadata': True,
@@ -37,6 +38,7 @@ async def yt_download_send_mp3(message: Message, url: str):
         
         'ffmpeg_location': FFMPEG_PATH if os.name == 'nt' else None,
     }
+
     
     await message.answer(DOWNLOAD_MESSAGE)
     

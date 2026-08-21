@@ -7,6 +7,12 @@ from config import *
 import os
 async def yt_download_send_mp3(message: Message, url: str):
 
+    base_extractor_args = {
+        'youtube': {
+            'client': ['android', 'ios', 'tv', 'web_embedded'],
+            'formats': ['missing_pot']
+        }
+    }
     ydl_opts = {
         'format': 'bestaudio/best',
         'outtmpl': './audios/%(title)s.%(ext)s',
@@ -15,11 +21,7 @@ async def yt_download_send_mp3(message: Message, url: str):
         'quiet': True,
         'writethumbnail': True,
         
-        'extractor_args': {
-            'youtube': {
-                'client': ['android', 'ios', 'tv', 'web_embedded']
-            }
-        },
+        'extractor_args': base_extractor_args,
         
         'postprocessors': [
             {
@@ -80,6 +82,7 @@ async def yt_download_send_mp3(message: Message, url: str):
                 'outtmpl': './audios/%(title)s.mp3',
                 'noplaylist': True,
                 'cookiefile': './cookies.txt',
+                'extractor_args': base_extractor_args,
                 'quiet': True,
                 'postprocessors': [{
                     'key': 'FFmpegExtractAudio',
